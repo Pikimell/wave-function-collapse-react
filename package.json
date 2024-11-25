@@ -1,5 +1,5 @@
 {
-  "name": "clicker-game",
+  "name": "wave-function-collapse",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,8 +13,6 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
     "antd": "^5.18.2",
-    "axios": "^1.7.2",
-    "formik": "^2.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
