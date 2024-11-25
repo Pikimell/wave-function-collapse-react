@@ -4,7 +4,7 @@ import HomePage from '../../pages/HomePage/HomePage';
 import FramesPage from '../../pages/FramesPage/FramesPage';
 import GeneratePage from '../../pages/GeneratePage/GeneratePage';
 
-const App = ({}) => {
+const App = () => {
   return (
     <Layout>
       <Routes>

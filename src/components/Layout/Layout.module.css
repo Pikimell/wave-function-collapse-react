@@ -7,4 +7,5 @@
   padding: 0 77px;
   min-height: 100vh;
   justify-content: space-between;
+  gap: 30px;
 }
