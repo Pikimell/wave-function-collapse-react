@@ -1,0 +1,24 @@
+@import-normalize;
+
+body {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar-thumb {
+  display: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+*::-webkit-scrollbar-track {
+  display: none;
+}
+
+* {
+  touch-action: manipulation !important;
+}
