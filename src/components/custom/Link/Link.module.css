@@ -1,0 +1,17 @@
+a:active {
+  color: var(--font-color);
+}
+a:focus {
+  color: var(--font-color);
+}
+
+.link {
+  font-size: 16px;
+  line-height: 16px;
+  color: var(--font-color);
+}
+
+.active {
+  color: var(--font-color);
+  text-decoration: underline;
+}
