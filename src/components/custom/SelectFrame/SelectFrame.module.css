@@ -1,12 +1,16 @@
-.container {
+.box {
+  width: 150px;
+  height: 150px;
+  min-height: 150px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   border: 2px solid var(--font-color);
   border-radius: var(--border-radius);
-  height: 420px;
-  width: 870px;
-  overflow: hidden;
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 50px;
+  color: var(--font-color);
 }
