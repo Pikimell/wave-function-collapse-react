@@ -1,0 +1,16 @@
+.frame {
+  width: 150px;
+  height: 150px;
+  border: 2px solid var(--font-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: contain;
+  width: 100%;
+  min-height: 100%;
+}

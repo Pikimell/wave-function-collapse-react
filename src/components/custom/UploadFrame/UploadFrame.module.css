@@ -1,0 +1,16 @@
+.box {
+  width: 150px;
+  height: 150px;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--font-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.icon {
+  font-size: 50px;
+  color: var(--font-color);
+}
