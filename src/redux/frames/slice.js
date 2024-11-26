@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { v4 as generateID } from 'uuid';
 const initialState = {
-  items: [],
+  items: {},
   selectFrame: {},
 };
 
@@ -20,7 +20,7 @@ export const sliceFrames = createSlice({
           down: [],
         },
       };
-      state.items.push(frame);
+      state.items[frame.id] = frame;
     },
     removeFrame(state, { payload: userData }) {},
     updateFrame(state, { payload: userData }) {},
