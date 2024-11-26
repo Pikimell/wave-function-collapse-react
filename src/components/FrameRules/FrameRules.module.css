@@ -16,3 +16,10 @@
   font-weight: 500;
   letter-spacing: 2%;
 }
+
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}

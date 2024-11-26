@@ -1,0 +1,37 @@
+.rule-container {
+  display: flex;
+  align-items: center;
+  height: 130px;
+  padding: 15px;
+  gap: 16px;
+  border: 1px solid black;
+  border-radius: var(--border-radius);
+  margin: 7px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 36px;
+  text-align: center;
+  min-width: 110px;
+}
+
+.line {
+  width: 2px;
+  height: 100%;
+  background-color: var(--font-color);
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  width: 100%;
+  gap: 30px;
+  height: 100%;
+}
+
+.frame-container {
+  width: 75px;
+  height: 75px;
+}

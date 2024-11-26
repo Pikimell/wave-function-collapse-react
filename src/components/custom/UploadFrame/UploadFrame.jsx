@@ -17,13 +17,25 @@ const UploadFrame = () => {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
+    input.multiple = 'true';
     input.onchange = event => {
-      const file = event.target.files[0];
-      if (file) {
+      const fileList = event.target.files;
+
+      if (fileList.length === 1) {
+        const file = fileList[0];
         const reader = new FileReader();
         reader.onload = () => {
-          setImage(reader.result); // Встановлюємо URL вибраного файлу
+          setImage(reader.result);
           openModal();
+        };
+        reader.readAsDataURL(file);
+        return;
+      }
+
+      for (const file of fileList) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          handleSave(reader.result);
         };
         reader.readAsDataURL(file);
       }

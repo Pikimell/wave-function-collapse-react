@@ -1,12 +1,29 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import style from './FrameList.module.css';
-import { selectFrames } from '../../redux/frames/selector';
+import { selectCurrentFrame, selectFrames } from '../../redux/frames/selector';
 import UploadFrame from '../custom/UploadFrame/UploadFrame';
 import FrameBlock from '../custom/FrameBlock/FrameBlock';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useListener } from '../../hooks/useListener';
+import { removeFrame } from '../../redux/frames/slice';
 
 const FrameList = () => {
+  const currentFrame = useSelector(selectCurrentFrame);
   const frames = useSelector(selectFrames);
+  const dispatch = useDispatch();
+
+  useListener(
+    {
+      event: 'keydown',
+      callback: e => {
+        if (e.code === 'Backspace') {
+          dispatch(removeFrame(currentFrame?.id));
+        }
+      },
+    },
+    [currentFrame],
+  );
+
   const frameList = useMemo(() => {
     return Object.values(frames);
   }, [frames]);
@@ -18,7 +35,7 @@ const FrameList = () => {
       <ul className={style.list}>
         {frameList.map(frame => {
           return (
-            <li key={frame.id}>
+            <li key={frame.id} className={style.frame}>
               <FrameBlock frame={frame} />
             </li>
           );
