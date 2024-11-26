@@ -26,13 +26,18 @@ export const sliceFrames = createSlice({
       delete state.items[frameId];
       state.currentFrame = null;
     },
-    updateFrame(state, { payload: userData }) {},
+    addRule(state, { payload: userData }) {
+      const { frameId, ruleType, ruleValue } = userData;
+      state.items[frameId].rules[ruleType].push(ruleValue);
+      state.currentFrame = state.items[frameId];
+    },
     selectFrame(state, { payload: frame }) {
       state.currentFrame = frame;
     },
+    updateFrame(state, { payload: userData }) {},
   },
 });
 
-export const { addFrame, removeFrame, updateFrame, selectFrame } =
+export const { addFrame, removeFrame, updateFrame, selectFrame, addRule } =
   sliceFrames.actions;
 export default sliceFrames.reducer;

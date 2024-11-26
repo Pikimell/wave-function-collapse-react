@@ -34,9 +34,10 @@ const FrameList = () => {
 
       <ul className={style.list}>
         {frameList.map(frame => {
+          const isActiveFrame = currentFrame?.id === frame?.id;
           return (
             <li key={frame.id} className={style.frame}>
-              <FrameBlock frame={frame} />
+              <FrameBlock frame={frame} isActive={isActiveFrame} />
             </li>
           );
         })}

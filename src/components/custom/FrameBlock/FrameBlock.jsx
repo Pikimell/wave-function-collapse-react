@@ -1,13 +1,10 @@
 import style from './FrameBlock.module.css';
 import clsx from 'clsx';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { selectFrame } from '../../../redux/frames/slice';
-import { selectCurrentFrame } from '../../../redux/frames/selector';
 
-const FrameBlock = ({ frame, showActive = true, onClick }) => {
+const FrameBlock = ({ frame, isActive = false, onClick }) => {
   const dispatch = useDispatch();
-  const currentFrame = useSelector(selectCurrentFrame);
-  const isActiveFrame = showActive && currentFrame?.id === frame?.id;
 
   const handleClick = () => {
     if (onClick) onClick(frame);
@@ -16,7 +13,7 @@ const FrameBlock = ({ frame, showActive = true, onClick }) => {
 
   return (
     <div
-      className={clsx(style.frame, isActiveFrame && style.active)}
+      className={clsx(style.frame, isActive && style.active)}
       onClick={handleClick}
     >
       <img className={style.image} src={frame.url} alt="frame" />
