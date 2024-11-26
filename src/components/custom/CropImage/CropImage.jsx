@@ -10,6 +10,7 @@ const getImageUrl = async image => {
 
 const CropImage = ({ imgUrl, onSave }) => {
   const editorRef = useRef(null);
+  const borderRef = useRef();
 
   const handleSave = async () => {
     if (editorRef.current) {
@@ -23,18 +24,32 @@ const CropImage = ({ imgUrl, onSave }) => {
     }
   };
 
+  const handleMouseEnter = () => {
+    borderRef.current.style.display = 'none';
+  };
+  const handleMouseLeave = () => {
+    borderRef.current.style.display = 'block';
+  };
+
   return (
-    <div className={style['crop-box']}>
-      <AvatarEditor
-        ref={editorRef}
-        image={imgUrl}
-        width={250}
-        height={250}
-        border={50}
-        color={[255, 255, 255, 0.5]} // Колір рамки
-        scale={1.0}
-        rotate={0}
-      />
+    <div className={style['crop-container']}>
+      <div className={style['crop-box']}>
+        <AvatarEditor
+          className={style.crop}
+          ref={editorRef}
+          image={imgUrl}
+          width={250}
+          height={250}
+          border={50}
+          color={[255, 255, 255, 0.7]}
+          scale={1.0}
+          rotate={0}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
+        <div className={style.box} ref={borderRef}></div>
+      </div>
+
       <button onClick={handleSave}>SAVE FRAME</button>
     </div>
   );
