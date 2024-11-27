@@ -1,7 +1,8 @@
 import style from './CropImage.module.css';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 import Button from '../Button/Button';
+import { Input, Slider } from 'antd';
 
 const getImageUrl = async image => {
   const dataUrl = image.toDataURL();
@@ -12,6 +13,7 @@ const getImageUrl = async image => {
 const CropImage = ({ imgUrl, onSave }) => {
   const editorRef = useRef(null);
   const borderRef = useRef();
+  const [scale, setScale] = useState(1);
 
   const handleSave = async () => {
     if (editorRef.current) {
@@ -31,6 +33,9 @@ const CropImage = ({ imgUrl, onSave }) => {
   const handleMouseLeave = () => {
     borderRef.current.style.display = 'block';
   };
+  const handleChangeScale = value => {
+    setScale(value);
+  };
 
   return (
     <div className={style['crop-container']}>
@@ -43,13 +48,22 @@ const CropImage = ({ imgUrl, onSave }) => {
           height={250}
           border={50}
           color={[255, 255, 255, 0.7]}
-          scale={1.0}
+          scale={scale}
           rotate={0}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         />
         <div className={style.box} ref={borderRef}></div>
       </div>
+
+      <Slider
+        defaultValue={1}
+        value={scale}
+        onChange={handleChangeScale}
+        min={1}
+        max={10}
+        step={0.01}
+      />
 
       <Button onClick={handleSave}>SAVE FRAME</Button>
     </div>
