@@ -1,0 +1,43 @@
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--bg-color);
+  background-color: var(--font-color);
+  border-radius: var(--border-radius);
+  border: 2px solid var(--bg-color);
+  min-height: 40px;
+  min-width: 100px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  width: fit-content;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.input:hover {
+  outline: 1px solid var(--secondary-color);
+}
+.input:focus {
+  outline: 2px solid var(--secondary-color);
+}
+
+.disabled {
+  opacity: 0.3;
+}
+
+.label {
+  padding: 0 10px;
+  width: fit-content;
+  white-space: nowrap;
+  border-right: 1px solid black;
+}
+
+.value {
+  width: max(100%, 100px);
+  outline: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+}

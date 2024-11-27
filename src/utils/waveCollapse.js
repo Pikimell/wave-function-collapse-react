@@ -13,6 +13,8 @@ export const createMap = (size, options) => {
       };
     }
   }
+
+  return map;
 };
 
 export const findLowestEntropy = map => {
@@ -28,7 +30,12 @@ export const findLowestEntropy = map => {
   // Вибираємо рандомний елемент із кандидатів
   return candidates[Math.floor(Math.random() * candidates.length)];
 };
-
+export const nextItemOfQueue = queue => {
+  for (let i = 0; i < queue.length; i++) {
+    const item = queue.shift();
+    if (!item.collapsed) return item;
+  }
+};
 export const isAlgorithmComplete = map => {
   return map.every(cell => cell.collapsed);
 };
@@ -41,7 +48,7 @@ const getValidOptions = (cell, ruleType, frames) => {
 };
 
 const getNeighbors = (cell, map) => {
-  const size = map.length / 2;
+  const size = Math.sqrt(map.length);
   const { x, y } = cell.position;
   const index = (x, y) => y * size + x;
 
@@ -81,9 +88,10 @@ export function updateOptions(map, cell, frames) {
   }
 }
 
-export function collapseStep(map, frames, canvas) {
-  const cell = findLowestEntropy(map);
-  renderCell(canvas, cell, frames);
+export function collapseStep(map, frames, canvas, queue = []) {
+  queue.sort((a, b) => a.options.length - b.options.length);
+
+  const cell = nextItemOfQueue(queue) || findLowestEntropy(map);
 
   if (!cell) {
     console.log('Алгоритм завершено.');
@@ -91,11 +99,20 @@ export function collapseStep(map, frames, canvas) {
   }
 
   collapsedCell(cell);
+  renderCell(canvas, cell, frames, map.length);
 
-  updateOptions(map, cell, frames);
+  const neighbors = getNeighbors(cell, map);
+  for (const itemCell of Object.values(neighbors)) {
+    if (itemCell) {
+      updateOptions(map, itemCell, frames);
+    }
+    if (itemCell && !itemCell.collapsed) {
+      queue.push(itemCell);
+    }
+  }
 }
 
-export function generate({ size = 10, frames, delay = 1000, canvas }) {
+export function generate({ size = 10, frames, delay = 10, canvas }) {
   const options = Object.keys(frames);
   const map = createMap(size, options);
 
@@ -106,7 +123,7 @@ export function generate({ size = 10, frames, delay = 1000, canvas }) {
   }, delay);
 }
 
-export function renderCell(canvas, cell, frames) {
+export function renderCell(canvas, cell, frames, size) {
   if (!canvas || !cell || !frames || !cell.finalState) return;
 
   const ctx = canvas.getContext('2d');
@@ -127,7 +144,7 @@ export function renderCell(canvas, cell, frames) {
 
   img.onload = () => {
     // Розмір клітинки (можна зробити динамічним або фіксованим)
-    const cellSize = canvas.width / Math.sqrt(canvas.cellsCount || 1);
+    const cellSize = canvas.width / Math.sqrt(size);
 
     // Розрахунок координат клітинки на канвасі
     const x = cell.position.x * cellSize;
@@ -140,4 +157,20 @@ export function renderCell(canvas, cell, frames) {
   img.onerror = () => {
     console.error(`Failed to load image at "${frame.url}".`);
   };
+}
+
+export function clearCanvas(canvas) {
+  if (!canvas) {
+    console.error('Canvas элемент не передан.');
+    return;
+  }
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    console.error('Не удалось получить контекст канваса.');
+    return;
+  }
+
+  // Очищаем весь канвас
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }

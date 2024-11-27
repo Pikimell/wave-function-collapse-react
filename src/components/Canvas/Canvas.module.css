@@ -3,10 +3,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px;
+  padding: 50px;
   border: 2px solid var(--font-color);
   border-radius: var(--border-radius);
-  aspect-ratio: 1 / 1;
   gap: 20px;
   margin: 5px;
+  overflow: auto;
+  aspect-ratio: 1 / 1;
+}
+
+.canvas {
+  aspect-ratio: 1 / 1;
+  background: white;
+  margin: auto;
 }
