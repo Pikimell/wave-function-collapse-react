@@ -1,5 +1,5 @@
 import style from './CropImage.module.css';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 
 const getImageUrl = async image => {
