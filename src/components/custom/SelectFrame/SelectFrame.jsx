@@ -7,10 +7,10 @@ import { selectFrameList } from '../../../redux/frames/selector';
 import { useMemo, useState } from 'react';
 import FrameBlock from '../FrameBlock/FrameBlock';
 
-const SelectFrame = ({ blackList = [], onSave }) => {
+const SelectFrame = ({ blackList = [], onSave, multiply = true }) => {
   const frames = useSelector(selectFrameList);
   const [modalIsOpen, openModal, closeModal] = useModal();
-  const [currentFrameId, setCurrentFrameId] = useState(null);
+  const [currentFrameIds, setCurrentFrameIds] = useState([]);
 
   const whiteList = useMemo(() => {
     if (!frames) return [];
@@ -21,10 +21,26 @@ const SelectFrame = ({ blackList = [], onSave }) => {
     openModal();
   };
 
-  const handleSave = () => {
-    onSave(currentFrameId);
-    setCurrentFrameId(null);
+  const handleSave = e => {
+    e.preventDefault();
+
+    if (!currentFrameIds.length) return;
+    onSave(currentFrameIds);
+    setCurrentFrameIds([]);
     closeModal();
+  };
+
+  const toggleItem = frameId => {
+    if (!multiply) {
+      setCurrentFrameIds([frameId]);
+    } else {
+      if (currentFrameIds.includes(frameId)) {
+        const copy = currentFrameIds.filter(el => el != frameId);
+        setCurrentFrameIds(copy);
+      } else {
+        setCurrentFrameIds([...currentFrameIds, frameId]);
+      }
+    }
   };
   return (
     <>
@@ -37,24 +53,24 @@ const SelectFrame = ({ blackList = [], onSave }) => {
         onCancel={closeModal}
         footer={null}
       >
-        <Flex vertical gap="20px">
+        <form className={style.form} onSubmit={handleSave}>
           <ul className={style.list}>
             {whiteList.map(frame => {
-              const isActive = currentFrameId === frame.id;
+              const isActive = currentFrameIds.includes(frame.id);
               return (
                 <FrameBlock
                   frame={frame}
                   key={frame.id}
                   isActive={isActive}
-                  onClick={() => setCurrentFrameId(frame.id)}
+                  onClick={() => toggleItem(frame.id)}
                 />
               );
             })}
           </ul>
-          <button disabled={!currentFrameId} onClick={handleSave}>
+          <button type="submit" disabled={!currentFrameIds.length}>
             Add Frame
           </button>
-        </Flex>
+        </form>
       </Modal>
     </>
   );

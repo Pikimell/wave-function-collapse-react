@@ -3,9 +3,14 @@ import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
 import { selectFrame } from '../../../redux/frames/slice';
 
-const FrameBlock = ({ frame, isActive = false, onClick }) => {
+const FrameBlock = ({
+  className = '',
+  frame,
+  isActive = false,
+  onClick,
+  ...props
+}) => {
   const dispatch = useDispatch();
-
   const handleClick = () => {
     if (onClick) onClick(frame);
     else dispatch(selectFrame(frame));
@@ -13,10 +18,13 @@ const FrameBlock = ({ frame, isActive = false, onClick }) => {
 
   return (
     <div
-      className={clsx(style.frame, isActive && style.active)}
+      className={clsx(style.frame, isActive && style.active, className)}
       onClick={handleClick}
+      {...props}
     >
-      <img className={style.image} src={frame.url} alt="frame" />
+      {frame?.url && (
+        <img className={style.image} src={frame.url} alt="frame" />
+      )}
     </div>
   );
 };

@@ -4,23 +4,32 @@ import { useState } from 'react';
 import { selectFrames } from '../../../redux/frames/selector';
 import FrameBlock from '../../custom/FrameBlock/FrameBlock';
 import SelectFrame from '../../custom/SelectFrame/SelectFrame';
-import { addRule } from '../../../redux/frames/slice';
+import { addRule, removeRule } from '../../../redux/frames/slice';
 
 const Rules = ({ frame, type = 'left' }) => {
   const dispatch = useDispatch();
   const frames = useSelector(selectFrames);
   const ruleList = frame.rules[type];
 
-  const handleSave = currentFrameId => {
-    if (currentFrameId) {
+  const handleSave = currentFrameIds => {
+    for (const id of currentFrameIds) {
       const data = {
         oldFrame: frame,
         frameId: frame.id,
         ruleType: type,
-        ruleValue: currentFrameId,
+        ruleValue: id,
       };
       dispatch(addRule(data));
     }
+  };
+
+  const handleDelete = ruleId => {
+    const data = {
+      frameId: frame.id,
+      ruleType: type,
+      ruleId,
+    };
+    dispatch(removeRule(data));
   };
 
   return (
@@ -35,7 +44,11 @@ const Rules = ({ frame, type = 'left' }) => {
           const frame = frames[frameId];
           return (
             <li key={frameId} className={style['frame-container']}>
-              <FrameBlock frame={frame} onClick={() => {}} showActive={false} />
+              <FrameBlock
+                frame={frame}
+                onClick={() => handleDelete(frameId)}
+                showActive={false}
+              />
             </li>
           );
         })}

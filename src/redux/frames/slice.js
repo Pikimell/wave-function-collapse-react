@@ -31,6 +31,15 @@ export const sliceFrames = createSlice({
       state.items[frameId].rules[ruleType].push(ruleValue);
       state.currentFrame = state.items[frameId];
     },
+    removeRule(state, { payload: userData }) {
+      const { frameId, ruleType, ruleId } = userData;
+
+      state.items[frameId].rules[ruleType] = state.items[frameId].rules[
+        ruleType
+      ].filter(el => el !== ruleId);
+
+      state.currentFrame = state.items[frameId];
+    },
     selectFrame(state, { payload: frame }) {
       state.currentFrame = frame;
     },
@@ -38,6 +47,12 @@ export const sliceFrames = createSlice({
   },
 });
 
-export const { addFrame, removeFrame, updateFrame, selectFrame, addRule } =
-  sliceFrames.actions;
+export const {
+  addFrame,
+  removeFrame,
+  updateFrame,
+  selectFrame,
+  addRule,
+  removeRule,
+} = sliceFrames.actions;
 export default sliceFrames.reducer;
