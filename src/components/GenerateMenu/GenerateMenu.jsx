@@ -25,7 +25,7 @@ const GenerateMenu = ({
         label="Map Size"
         type="number"
         min="5"
-        max="100"
+        max="300"
         value={params.size}
         onChange={e => {
           setParams({ ...params, size: +e.target.value });
@@ -35,7 +35,7 @@ const GenerateMenu = ({
         label="Sprite Size"
         type="number"
         min="5"
-        max="100"
+        max="400"
         value={params.spriteSize}
         onChange={e => {
           setParams({ ...params, spriteSize: +e.target.value });

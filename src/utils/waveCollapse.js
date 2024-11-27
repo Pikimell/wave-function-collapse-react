@@ -148,10 +148,10 @@ export function renderCell(canvas, cell, frames, size) {
 
     // Розрахунок координат клітинки на канвасі
     const x = cell.position.x * cellSize;
-    const y = cell.position.y * cellSize;
+    const y = cell.position.y * (cellSize / 2);
 
     // Малюємо фрейм у відповідній позиції
-    ctx.drawImage(img, x, y, cellSize, cellSize);
+    ctx.drawImage(img, x, y, cellSize, cellSize / 2);
   };
 
   img.onerror = () => {
