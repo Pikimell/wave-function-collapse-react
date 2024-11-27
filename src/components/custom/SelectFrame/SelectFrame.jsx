@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectFrameList } from '../../../redux/frames/selector';
 import { useMemo, useState } from 'react';
 import FrameBlock from '../FrameBlock/FrameBlock';
+import Button from '../Button/Button';
 
 const SelectFrame = ({ blackList = [], onSave, multiply = true }) => {
   const frames = useSelector(selectFrameList);
@@ -67,9 +68,9 @@ const SelectFrame = ({ blackList = [], onSave, multiply = true }) => {
               );
             })}
           </ul>
-          <button type="submit" disabled={!currentFrameIds.length}>
+          <Button type="submit" disabled={!currentFrameIds.length}>
             Add Frame
-          </button>
+          </Button>
         </form>
       </Modal>
     </>

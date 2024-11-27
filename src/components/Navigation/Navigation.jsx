@@ -6,7 +6,7 @@ const Navigation = ({}) => {
     <nav className={style.navigation}>
       <Link to="/">Home</Link>
       <Link to="/frames">Frames</Link>
-      <Link to="/generation">Generation</Link>
+      <Link to="/generate">Generation</Link>
     </nav>
   );
 };

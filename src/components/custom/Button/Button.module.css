@@ -1,0 +1,17 @@
+.button {
+  color: var(--bg-color);
+  background-color: var(--font-color);
+  border-radius: var(--border-radius);
+  border: 2px solid var(--bg-color);
+  min-height: 40px;
+  padding: 10px;
+}
+
+.primary {
+  background-color: var(--primary-color);
+  color: var(--font-color);
+}
+
+.disabled {
+  opacity: 0.3;
+}

@@ -1,6 +1,7 @@
 import style from './CropImage.module.css';
 import { useRef } from 'react';
 import AvatarEditor from 'react-avatar-editor';
+import Button from '../Button/Button';
 
 const getImageUrl = async image => {
   const dataUrl = image.toDataURL();
@@ -50,7 +51,7 @@ const CropImage = ({ imgUrl, onSave }) => {
         <div className={style.box} ref={borderRef}></div>
       </div>
 
-      <button onClick={handleSave}>SAVE FRAME</button>
+      <Button onClick={handleSave}>SAVE FRAME</Button>
     </div>
   );
 };
