@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Layout from '../Layout/Layout';
 import HomePage from '../../pages/HomePage/HomePage';
-import FramesPage from '../../pages/FramesPage/FramesPage';
+import TilesPage from '../../pages/TilesPage/TilesPage';
 import GeneratePage from '../../pages/GeneratePage/GeneratePage';
 
 const App = () => {
@@ -9,7 +9,7 @@ const App = () => {
     <Layout>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/frames" element={<FramesPage />} />
+        <Route path="/tiles" element={<TilesPage />} />
         <Route path="/generate" element={<GeneratePage />} />
 
         <Route path="/*" element={<HomePage />} />

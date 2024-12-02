@@ -18,8 +18,8 @@ export const useMapGenerate = () => {
     };
   }, []);
 
-  const startGenerate = ({ size = 10, canvas, frames, delay = 10 }) => {
-    const options = Object.keys(frames);
+  const startGenerate = ({ size = 10, canvas, tiles, delay = 10 }) => {
+    const options = Object.keys(tiles);
     if (!options.length) return;
     setIsActive(true);
     clearCanvas(canvas);
@@ -28,7 +28,7 @@ export const useMapGenerate = () => {
     const queue = [];
 
     intervalRef.current = setInterval(() => {
-      collapseStep(newMap, frames, canvas, queue);
+      collapseStep(newMap, tiles, canvas, queue);
       if (isAlgorithmComplete(newMap)) {
         setIsActive(false);
         clearInterval(intervalRef.current);
@@ -38,17 +38,17 @@ export const useMapGenerate = () => {
     setTimeout(() => stopGenerate, 3000);
   };
 
-  const quickGenerate = ({ size = 10, canvas, frames }) => {
+  const quickGenerate = ({ size = 10, canvas, tiles }) => {
     clearCanvas(canvas);
     setIsActive(true);
     const maxIteration = 1000000;
     let iteration = 0;
-    const options = Object.keys(frames);
+    const options = Object.keys(tiles);
     const newMap = createMap(size, options);
     const queue = [];
 
     while (isActive && iteration++ < maxIteration) {
-      collapseStep(newMap, frames, canvas, queue);
+      collapseStep(newMap, tiles, canvas, queue);
       if (isAlgorithmComplete(newMap)) {
         setIsActive(false);
         break;

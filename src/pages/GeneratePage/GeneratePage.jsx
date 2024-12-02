@@ -4,30 +4,30 @@ import GenerateMenu from '../../components/GenerateMenu/GenerateMenu';
 import { useMapGenerate } from '../../hooks/useMapGenerate';
 import style from './GeneratePage.module.css';
 import { useRef, useState } from 'react';
-import { selectFrames } from '../../redux/frames/selector';
+import { selectTiles } from '../../redux/tiles/selector';
 
 const GeneratePage = ({}) => {
   const { startGenerate, stopGenerate, quickGenerate, isActive } =
     useMapGenerate();
 
   const canvasRef = useRef();
-  const frames = useSelector(selectFrames);
+  const tiles = useSelector(selectTiles);
   const [params, setParams] = useState({ size: 10, spriteSize: 50 });
 
   const handleStart = () => {
     const size = params.size;
     const canvas = canvasRef.current;
 
-    if (size && canvas && frames) {
-      startGenerate({ size, canvas, frames });
+    if (size && canvas && tiles) {
+      startGenerate({ size, canvas, tiles });
     }
   };
   const handleQuickStart = () => {
     const size = params.size;
     const canvas = canvasRef.current;
 
-    if (size && canvas && frames) {
-      quickGenerate({ size, canvas, frames });
+    if (size && canvas && tiles) {
+      quickGenerate({ size, canvas, tiles });
     }
   };
 

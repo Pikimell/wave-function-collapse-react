@@ -1,4 +1,4 @@
-.frame {
+.tile {
   max-width: 150px;
   max-height: 150px;
   width: 100%;
@@ -24,6 +24,6 @@
   border: 5px solid var(--secondary-color);
 }
 
-.frame:hover {
+.tile:hover {
   outline: 4px solid rgba(255, 99, 71, 0.21);
 }

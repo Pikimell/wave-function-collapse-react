@@ -40,11 +40,11 @@ export const isAlgorithmComplete = map => {
   return map.every(cell => cell.collapsed);
 };
 
-const getValidOptions = (cell, ruleType, frames) => {
+const getValidOptions = (cell, ruleType, tiles) => {
   if (!cell?.collapsed) return [];
-  const frame = frames[cell.finalState];
-  if (!frame) return [];
-  return frame.rules[ruleType];
+  const tile = tiles[cell.finalState];
+  if (!tile) return [];
+  return tile.rules[ruleType];
 };
 
 const getNeighbors = (cell, map) => {
@@ -70,13 +70,13 @@ const collapsedCell = cell => {
   cell.finalState = chosenOption;
 };
 
-export function updateOptions(map, cell, frames) {
+export function updateOptions(map, cell, tiles) {
   const neighbors = getNeighbors(cell, map);
 
-  const topRules = getValidOptions(neighbors.top, 'down', frames);
-  const bottomRules = getValidOptions(neighbors.bottom, 'up', frames);
-  const leftRules = getValidOptions(neighbors.left, 'right', frames);
-  const rightRules = getValidOptions(neighbors.right, 'left', frames);
+  const topRules = getValidOptions(neighbors.top, 'down', tiles);
+  const bottomRules = getValidOptions(neighbors.bottom, 'up', tiles);
+  const leftRules = getValidOptions(neighbors.left, 'right', tiles);
+  const rightRules = getValidOptions(neighbors.right, 'left', tiles);
 
   const allRules = [topRules, bottomRules, leftRules, rightRules].filter(
     r => r.length > 0,
@@ -88,7 +88,7 @@ export function updateOptions(map, cell, frames) {
   }
 }
 
-export function collapseStep(map, frames, canvas, queue = []) {
+export function collapseStep(map, tiles, canvas, queue = []) {
   queue.sort((a, b) => a.options.length - b.options.length);
 
   const cell = nextItemOfQueue(queue) || findLowestEntropy(map);
@@ -99,12 +99,12 @@ export function collapseStep(map, frames, canvas, queue = []) {
   }
 
   collapsedCell(cell);
-  renderCell(canvas, cell, frames, map.length);
+  renderCell(canvas, cell, tiles, map.length);
 
   const neighbors = getNeighbors(cell, map);
   for (const itemCell of Object.values(neighbors)) {
     if (itemCell) {
-      updateOptions(map, itemCell, frames);
+      updateOptions(map, itemCell, tiles);
     }
     if (itemCell && !itemCell.collapsed) {
       queue.push(itemCell);
@@ -112,19 +112,19 @@ export function collapseStep(map, frames, canvas, queue = []) {
   }
 }
 
-export function generate({ size = 10, frames, delay = 10, canvas }) {
-  const options = Object.keys(frames);
+export function generate({ size = 10, tiles, delay = 10, canvas }) {
+  const options = Object.keys(tiles);
   const map = createMap(size, options);
 
   const intervalId = setInterval(() => {
-    collapseStep(map, frames, canvas);
+    collapseStep(map, tiles, canvas);
     const isEnd = isAlgorithmComplete(map);
     if (isEnd) clearInterval(intervalId);
   }, delay);
 }
 
-export function renderCell(canvas, cell, frames, size) {
-  if (!canvas || !cell || !frames || !cell.finalState) return;
+export function renderCell(canvas, cell, tiles, size) {
+  if (!canvas || !cell || !tiles || !cell.finalState) return;
 
   const ctx = canvas.getContext('2d');
   if (!ctx) {
@@ -132,15 +132,15 @@ export function renderCell(canvas, cell, frames, size) {
     return;
   }
 
-  const frame = frames[cell.finalState];
-  if (!frame || !frame.url) {
-    console.error(`Frame for state "${cell.finalState}" not found.`);
+  const tile = tiles[cell.finalState];
+  if (!tile || !tile.url) {
+    console.error(`Tile for state "${cell.finalState}" not found.`);
     return;
   }
 
   // Завантаження зображення з URL
   const img = new Image();
-  img.src = frame.url;
+  img.src = tile.url;
 
   img.onload = () => {
     // Розмір клітинки (можна зробити динамічним або фіксованим)
@@ -155,7 +155,7 @@ export function renderCell(canvas, cell, frames, size) {
   };
 
   img.onerror = () => {
-    console.error(`Failed to load image at "${frame.url}".`);
+    console.error(`Failed to load image at "${tile.url}".`);
   };
 }
 

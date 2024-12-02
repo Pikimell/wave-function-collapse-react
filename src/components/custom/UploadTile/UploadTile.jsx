@@ -1,13 +1,13 @@
 import { Modal } from 'antd';
-import style from './UploadFrame.module.css';
+import style from './UploadTile.module.css';
 import { FiPlus } from 'react-icons/fi';
 import CropImage from '../CropImage/CropImage';
 import { useModal } from '../../../hooks/useModal';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addFrame } from '../../../redux/frames/slice';
+import { addTile } from '../../../redux/tiles/slice';
 
-const UploadFrame = () => {
+const UploadTile = () => {
   const dispatch = useDispatch();
   const [modalIsOpen, openModal, closeModal] = useModal();
   const [image, setImage] = useState(null);
@@ -45,7 +45,7 @@ const UploadFrame = () => {
 
   // Обробка збереження редагованого зображення
   const handleSave = async url => {
-    dispatch(addFrame(url));
+    dispatch(addTile(url));
     closeModal();
   };
 
@@ -61,4 +61,4 @@ const UploadFrame = () => {
   );
 };
 
-export default UploadFrame;
+export default UploadTile;

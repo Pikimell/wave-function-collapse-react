@@ -1,18 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // LocalStorage
-import framesReducer from './frames/slice';
+import tilesReducer from './tiles/slice';
 
 const persistConfig = {
-  key: 'frames',
+  key: 'tiles',
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, framesReducer);
+const persistedReducer = persistReducer(persistConfig, tilesReducer);
 
 export const store = configureStore({
   reducer: {
-    frames: persistedReducer,
+    tiles: persistedReducer,
   },
 });
 
