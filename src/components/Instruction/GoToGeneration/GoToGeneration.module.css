@@ -1,0 +1,47 @@
+.container {
+  padding: 20px;
+  margin: 0 auto;
+  background-color: #fefefe;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.steps {
+  list-style-type: decimal;
+  padding-left: 20px;
+}
+
+.steps li {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.steps li strong {
+  font-weight: bold;
+  color: #222;
+}
+
+.footer {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  text-align: center;
+  margin-top: 20px;
+}

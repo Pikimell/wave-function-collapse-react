@@ -15,3 +15,7 @@ a:focus {
   color: var(--font-color);
   text-decoration: underline;
 }
+
+a:hover {
+  color: var(--secondary-color);
+}

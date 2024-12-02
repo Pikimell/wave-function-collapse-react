@@ -1,6 +1,6 @@
 .header {
   display: grid;
-  grid-template-columns: 20% 60% 20%;
+  grid-template-columns: 30% 40% 30%;
   width: 100%;
   border-left: 1px solid var(--font-color);
   border-bottom: 1px solid var(--font-color);

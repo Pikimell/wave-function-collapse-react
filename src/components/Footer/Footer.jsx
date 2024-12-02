@@ -2,7 +2,11 @@ import style from './Footer.module.css';
 import { useState } from 'react';
 
 const Footer = ({}) => {
-  return <div>Footer</div>;
+  return (
+    <footer className={style.footer}>
+      Powered By Patona Student, {new Date().getFullYear()}
+    </footer>
+  );
 };
 
 export default Footer;

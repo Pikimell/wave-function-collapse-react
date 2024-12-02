@@ -1,0 +1,45 @@
+.container {
+  padding: 20px;
+  margin: 0 auto;
+  background-color: var(--font-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--bg-color);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--bg-color);
+  opacity: 0.8;
+  margin-bottom: 15px;
+}
+
+.list {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.list li {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--bg-color);
+  opacity: 0.8;
+}
+
+.footer {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--bg-color);
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0.8;
+}
