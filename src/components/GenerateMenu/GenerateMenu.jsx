@@ -1,3 +1,4 @@
+import { Flex } from 'antd';
 import Button from '../custom/Button/Button';
 import Input from '../custom/Input/Input';
 import style from './GenerateMenu.module.css';
@@ -5,10 +6,11 @@ import style from './GenerateMenu.module.css';
 const GenerateMenu = ({
   onStart,
   onStop,
+  onSaveImage,
+  onSaveJSON,
   onQuickStart,
-  params,
-  setParams,
   isActive,
+  hasResult = false,
 }) => {
   return (
     <div className={style.container}>
@@ -21,26 +23,12 @@ const GenerateMenu = ({
       <Button onClick={onStop} disabled={!isActive}>
         Stop Generate
       </Button>
-      <Input
-        label="Map Size"
-        type="number"
-        min="5"
-        max="300"
-        value={params.size}
-        onChange={e => {
-          setParams({ ...params, size: +e.target.value });
-        }}
-      />
-      <Input
-        label="Sprite Size"
-        type="number"
-        min="5"
-        max="400"
-        value={params.spriteSize}
-        onChange={e => {
-          setParams({ ...params, spriteSize: +e.target.value });
-        }}
-      />
+      <Button onClick={onSaveImage} disabled={!hasResult}>
+        Save Image
+      </Button>
+      <Button onClick={onSaveJSON} disabled={!hasResult}>
+        Save JSON
+      </Button>
     </div>
   );
 };

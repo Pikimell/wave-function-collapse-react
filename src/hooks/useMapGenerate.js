@@ -8,6 +8,8 @@ import {
 
 export const useMapGenerate = () => {
   const [isActive, setIsActive] = useState(false);
+  const [hasResult, setHasResult] = useState(false);
+  const [result, setResult] = useState(null);
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -22,6 +24,7 @@ export const useMapGenerate = () => {
     const options = Object.keys(tiles);
     if (!options.length) return;
     setIsActive(true);
+    setHasResult(false);
     clearCanvas(canvas);
 
     const newMap = createMap(size, options);
@@ -31,6 +34,8 @@ export const useMapGenerate = () => {
       collapseStep(newMap, tiles, canvas, queue);
       if (isAlgorithmComplete(newMap)) {
         setIsActive(false);
+        setHasResult(true);
+        setResult(newMap);
         clearInterval(intervalRef.current);
       }
     }, delay);
@@ -41,19 +46,24 @@ export const useMapGenerate = () => {
   const quickGenerate = ({ size = 10, canvas, tiles }) => {
     clearCanvas(canvas);
     setIsActive(true);
-    const maxIteration = 1000000;
+    setHasResult(false);
+    const maxIteration = 1000000000;
     let iteration = 0;
     const options = Object.keys(tiles);
     const newMap = createMap(size, options);
     const queue = [];
 
-    while (isActive && iteration++ < maxIteration) {
+    while (iteration++ < maxIteration) {
       collapseStep(newMap, tiles, canvas, queue);
       if (isAlgorithmComplete(newMap)) {
+        setHasResult(true);
         setIsActive(false);
+        setResult(newMap);
         break;
       }
     }
+
+    setIsActive(false);
   };
 
   const stopGenerate = () => {
@@ -64,5 +74,12 @@ export const useMapGenerate = () => {
     }
   };
 
-  return { isActive, startGenerate, quickGenerate, stopGenerate };
+  return {
+    isActive,
+    hasResult,
+    startGenerate,
+    quickGenerate,
+    stopGenerate,
+    result,
+  };
 };

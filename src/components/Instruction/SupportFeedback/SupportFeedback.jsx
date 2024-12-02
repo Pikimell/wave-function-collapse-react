@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './SupportFeedback.module.css';
+import { INSTAGRAM, LINKEDIN, TELEGRAM } from '../../../utils/constants';
 
 const SupportFeedback = () => {
   return (
@@ -12,14 +13,13 @@ const SupportFeedback = () => {
       <h2 className={styles.subtitle}>Contact Us</h2>
       <ul className={styles.contactList}>
         <li>
-          <strong>Email:</strong> support@mapgenerator.com
+          <strong>Telegram:</strong> @{TELEGRAM}
         </li>
         <li>
-          <strong>Phone:</strong> +1 (123) 456-7890
+          <strong>Instagram:</strong> @{INSTAGRAM}
         </li>
         <li>
-          <strong>Live Chat:</strong> Available on our website during business
-          hours.
+          <strong>Linkedin:</strong> @{LINKEDIN}
         </li>
       </ul>
       <h2 className={styles.subtitle}>Feedback</h2>

@@ -14,8 +14,8 @@ const GettingStarted = () => {
           your tiles, preferably in PNG or JPG format.
         </li>
         <li>
-          <strong>Upload your tiles:</strong> Navigate to the "Upload Tiles" tab
-          and add your tile images to the system.
+          <strong>Upload your tiles:</strong> Navigate to the "Tiles" tab and
+          add your tile images to the system.
         </li>
         <li>
           <strong>Set rules:</strong> Define how each tile can connect with
@@ -23,8 +23,9 @@ const GettingStarted = () => {
           below).
         </li>
         <li>
-          <strong>Generate your map:</strong> Go to the "Generate Map" tab,
-          configure the map size and block dimensions, and click "Generate."
+          <strong>Generate your map:</strong> Go to the "Generation" tab,
+          configure the map size and block dimensions, and click "Start
+          Generate."
         </li>
       </ol>
       <p className={styles.footer}>

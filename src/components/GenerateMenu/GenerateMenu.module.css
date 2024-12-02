@@ -7,7 +7,7 @@
   border-radius: var(--border-radius);
   height: 100%;
   gap: 20px;
-  margin: 5px 5px 20px 5px;
-  overflow: scroll;
+  margin: 0 0 20px 0;
+  overflow: hidden;
   width: 100%;
 }

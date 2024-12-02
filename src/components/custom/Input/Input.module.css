@@ -6,8 +6,7 @@
   background-color: var(--font-color);
   border-radius: var(--border-radius);
   border: 2px solid var(--bg-color);
-  min-height: 40px;
-  min-width: 100px;
+  height: 40px;
   padding: 10px;
   font-size: 16px;
   font-weight: 700;
@@ -35,7 +34,7 @@
 }
 
 .value {
-  width: max(100%, 100px);
+  width: max(100%, 20px);
   outline: none;
   border: none;
   font-size: 16px;
