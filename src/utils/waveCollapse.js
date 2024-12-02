@@ -88,7 +88,7 @@ export function updateOptions(map, cell, tiles) {
   }
 }
 
-export function collapseStep(map, tiles, canvas, queue = []) {
+export function collapseStep(map, tiles, canvas, queue = [], render = true) {
   queue.sort((a, b) => a.options.length - b.options.length);
 
   const cell = nextItemOfQueue(queue) || findLowestEntropy(map);
@@ -99,7 +99,7 @@ export function collapseStep(map, tiles, canvas, queue = []) {
   }
 
   collapsedCell(cell);
-  renderCell(canvas, cell, tiles, map.length);
+  if (render) renderCell(canvas, cell, tiles, map.length);
 
   const neighbors = getNeighbors(cell, map);
   for (const itemCell of Object.values(neighbors)) {
@@ -148,10 +148,10 @@ export function renderCell(canvas, cell, tiles, size) {
 
     // Розрахунок координат клітинки на канвасі
     const x = cell.position.x * cellSize;
-    const y = cell.position.y * (cellSize / 2);
+    const y = cell.position.y * cellSize;
 
     // Малюємо фрейм у відповідній позиції
-    ctx.drawImage(img, x, y, cellSize, cellSize / 2);
+    ctx.drawImage(img, x, y, cellSize, cellSize);
   };
 
   img.onerror = () => {

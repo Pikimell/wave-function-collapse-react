@@ -11,15 +11,18 @@
   overflow: auto;
 }
 .canvas-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--secondary-color);
   aspect-ratio: 1 / 1;
   width: 80%;
   overflow: scroll;
-  padding: 20px;
   border-radius: 5px;
 }
 
 .canvas {
+  width: 90%;
   aspect-ratio: 1 / 1;
   background: white;
 }
