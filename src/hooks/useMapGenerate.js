@@ -47,13 +47,13 @@ export const useMapGenerate = () => {
     clearCanvas(canvas);
     setIsActive(true);
     setHasResult(false);
-    const maxIteration = 1000000000;
-    let iteration = 0;
+    const maxTime = 30000;
+    const initTime = Date.now();
     const options = Object.keys(tiles);
     const newMap = createMap(size, options);
     const queue = [];
 
-    while (iteration++ < maxIteration) {
+    while (initTime + maxTime > Date.now()) {
       collapseStep(newMap, tiles, canvas, queue);
       if (isAlgorithmComplete(newMap)) {
         setHasResult(true);
