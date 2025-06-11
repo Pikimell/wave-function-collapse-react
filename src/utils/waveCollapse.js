@@ -1,4 +1,5 @@
 export const createMap = (size, options) => {
+  size = Math.min(size, 300);
   const len = size * size;
   const map = new Array(len).fill(null);
 
