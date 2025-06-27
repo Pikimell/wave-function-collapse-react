@@ -4,7 +4,7 @@ import { useState } from 'react';
 const Footer = ({}) => {
   return (
     <footer className={style.footer}>
-      Powered By Patona Student, {new Date().getFullYear()}
+      Powered By Pashchenko Volodymyr, {new Date().getFullYear()}
     </footer>
   );
 };

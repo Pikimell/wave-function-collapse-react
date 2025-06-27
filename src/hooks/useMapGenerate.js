@@ -64,6 +64,8 @@ export const useMapGenerate = () => {
     }
 
     setIsActive(false);
+    const diff = Date.now() - initTime;
+    console.log(`Кількість спрайтів: ${size};\nЧас виконання: ${diff}ms;`);
   };
 
   const stopGenerate = () => {

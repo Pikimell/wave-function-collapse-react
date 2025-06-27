@@ -8,6 +8,9 @@ import './style/variables.css';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store';
+import { data } from './helpers/example.js';
+
+console.log(data);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
