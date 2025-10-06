@@ -1,7 +1,22 @@
 :root {
-  --bg-color: #282828;
-  --font-color: #fafafa;
-  --primary-color: #0088ff;
-  --secondary-color: tomato;
-  --border-radius: 10px;
+  --bg-color: #050b1a;
+  --bg-gradient: radial-gradient(120% 140% at 15% 15%, rgba(56, 189, 248, 0.16) 0%, rgba(168, 85, 247, 0.12) 35%, rgba(15, 23, 42, 0.92) 70%);
+  --surface-color: rgba(15, 23, 42, 0.72);
+  --surface-strong: rgba(15, 23, 42, 0.92);
+  --surface-border: rgba(148, 163, 184, 0.24);
+  --font-color: #f8fafc;
+  --font-muted: #a3b2c7;
+  --primary-color: #38bdf8;
+  --secondary-color: #a855f7;
+  --accent-color: #f97316;
+  --glow-color: rgba(56, 189, 248, 0.35);
+  --border-radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 28px;
+  --shadow-soft: 0 18px 48px -25px rgba(15, 23, 42, 0.82);
+  --shadow-hard: 0 25px 65px -40px rgba(120, 0, 200, 0.55);
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --blur-strength: 20px;
+  --transition-fast: 160ms ease;
+  --transition-medium: 260ms ease;
 }

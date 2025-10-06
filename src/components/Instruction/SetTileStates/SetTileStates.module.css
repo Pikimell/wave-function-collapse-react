@@ -1,47 +1,84 @@
 .container {
-  padding: 20px;
-  margin: 0 auto;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: clamp(26px, 7vh, 48px) auto;
+  padding: clamp(30px, 4.6vw, 48px);
+  max-width: 880px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.64));
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  position: relative;
+  isolation: isolate;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  inset: 8% 10%;
+  border-radius: inherit;
+  background: radial-gradient(85% 90% at 20% 0%, rgba(168, 85, 247, 0.22), transparent 70%),
+    radial-gradient(75% 80% at 80% 95%, rgba(56, 189, 248, 0.16), transparent 75%);
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #2a2a2a;
-  margin-bottom: 15px;
+  font-size: clamp(1.6rem, 3.2vw, 2.1rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   text-align: center;
+  color: var(--font-color);
 }
 
 .description {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: #4a4a4a;
-  margin-bottom: 20px;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--font-muted);
+  text-align: center;
 }
 
 .steps {
-  list-style-type: decimal;
-  padding-left: 20px;
+  display: grid;
+  gap: 18px;
 }
 
 .steps li {
+  padding: 18px 22px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(21, 31, 49, 0.55);
+  color: var(--font-color);
   font-size: 1rem;
-  line-height: 1.5;
-  color: #333;
-  margin-bottom: 10px;
+  line-height: 1.6;
+  position: relative;
+  overflow: hidden;
+}
+
+.steps li::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), transparent 65%);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .steps li strong {
-  font-weight: bold;
-  color: #222;
+  display: block;
+  color: var(--secondary-color);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
 }
 
 .footer {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #2a2a2a;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--font-muted);
   text-align: center;
-  margin-top: 20px;
+  letter-spacing: 0.1em;
 }

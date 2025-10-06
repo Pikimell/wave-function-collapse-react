@@ -1,29 +1,50 @@
 .tile {
-  max-width: 150px;
-  max-height: 150px;
+  max-width: 160px;
+  max-height: 160px;
   width: 100%;
   height: 100%;
-  border: 5px solid var(--font-color);
-  border-radius: var(--border-radius);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.75));
+  box-shadow: var(--shadow-inner);
   cursor: pointer;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-medium), border-color var(--transition-fast);
+  position: relative;
+  isolation: isolate;
 }
 
-.image {
-  object-fit: contain;
-  width: 100%;
-  min-height: 100%;
-}
-
-.active {
-  border: 5px solid var(--secondary-color);
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), transparent 65%);
+  opacity: 0;
+  transition: opacity var(--transition-medium);
+  z-index: -1;
 }
 
 .tile:hover {
-  outline: 4px solid rgba(255, 99, 71, 0.21);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 40px -34px rgba(56, 189, 248, 0.75);
+}
+
+.tile:hover::before {
+  opacity: 1;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: lighten;
+}
+
+.active {
+  border-color: rgba(56, 189, 248, 0.65);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35), 0 18px 36px -28px rgba(56, 189, 248, 0.7);
 }

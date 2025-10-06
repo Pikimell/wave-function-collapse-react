@@ -5,12 +5,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--font-color);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-sm);
+  border: 1px dashed rgba(148, 163, 184, 0.35);
+  background: linear-gradient(140deg, rgba(168, 85, 247, 0.16), rgba(56, 189, 248, 0.12));
+  color: var(--font-color);
   cursor: pointer;
+  transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-medium);
+}
+
+.box:hover {
+  transform: translateY(-3px);
+  border-color: rgba(168, 85, 247, 0.55);
+  box-shadow: 0 20px 40px -30px rgba(168, 85, 247, 0.65);
 }
 
 .icon {
-  font-size: 50px;
-  color: var(--font-color);
+  font-size: clamp(2.4rem, 4vw, 3rem);
 }

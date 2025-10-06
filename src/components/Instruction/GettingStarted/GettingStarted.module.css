@@ -1,47 +1,90 @@
 .container {
-  padding: 20px;
-  margin: 0 auto;
-  background-color: #f1f1f1;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: clamp(26px, 7vh, 50px) auto;
+  padding: clamp(30px, 4.4vw, 48px);
+  max-width: 880px;
+  background: linear-gradient(140deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.64));
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 3vh, 26px);
+  position: relative;
+  isolation: isolate;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  inset: 10% 8%;
+  border-radius: inherit;
+  background: radial-gradient(80% 85% at 15% 5%, rgba(56, 189, 248, 0.18), transparent 70%),
+    radial-gradient(80% 80% at 85% 95%, rgba(249, 115, 22, 0.14), transparent 72%);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #222;
-  margin-bottom: 15px;
+  font-size: clamp(1.6rem, 3.4vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   text-align: center;
+  color: var(--font-color);
 }
 
 .description {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: #444;
-  margin-bottom: 20px;
+  font-size: clamp(1rem, 2.1vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--font-muted);
 }
 
 .steps {
-  list-style-type: decimal;
-  padding-left: 20px;
+  counter-reset: step;
+  display: grid;
+  gap: 18px;
 }
 
 .steps li {
+  position: relative;
+  padding-left: 52px;
+  line-height: 1.6;
+  color: var(--font-color);
   font-size: 1rem;
-  line-height: 1.5;
-  color: #333;
-  margin-bottom: 10px;
+}
+
+.steps li::before {
+  counter-increment: step;
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  box-shadow: 0 12px 24px -16px rgba(56, 189, 248, 0.65);
 }
 
 .steps li strong {
-  font-weight: bold;
-  color: #111;
+  display: block;
+  font-weight: 700;
+  color: var(--font-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
 }
 
 .footer {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #222;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--font-muted);
   text-align: center;
-  margin-top: 20px;
+  margin-top: 8px;
 }

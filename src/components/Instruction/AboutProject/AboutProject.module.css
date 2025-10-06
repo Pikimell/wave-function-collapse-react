@@ -1,45 +1,70 @@
 .container {
-  padding: 20px;
-  margin: 0 auto;
-  background-color: var(--font-color);
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: clamp(22px, 6vh, 46px) auto;
+  padding: clamp(28px, 4vw, 42px);
+  max-width: 860px;
+  background: linear-gradient(150deg, rgba(15, 23, 42, 0.94), rgba(30, 41, 59, 0.68));
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(var(--blur-strength));
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 3vh, 24px);
+  position: relative;
+  isolation: isolate;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  inset: 8% 6%;
+  border-radius: inherit;
+  background: radial-gradient(80% 90% at 20% 0%, rgba(56, 189, 248, 0.2), transparent 70%),
+    radial-gradient(90% 90% at 80% 100%, rgba(168, 85, 247, 0.18), transparent 75%);
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--bg-color);
-  margin-bottom: 10px;
+  font-size: clamp(1.7rem, 3.6vw, 2.2rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   text-align: center;
+  color: var(--font-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .description {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: var(--bg-color);
-  opacity: 0.8;
-  margin-bottom: 15px;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--font-muted);
 }
 
 .list {
-  list-style-type: disc;
-  padding-left: 20px;
-  margin-bottom: 15px;
+  display: grid;
+  gap: 12px;
+  padding-left: 1.2rem;
 }
 
 .list li {
   font-size: 1rem;
-  line-height: 1.5;
-  color: var(--bg-color);
-  opacity: 0.8;
+  line-height: 1.6;
+  color: var(--font-color);
+}
+
+.list li::marker {
+  color: var(--accent-color);
 }
 
 .footer {
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--bg-color);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   text-align: center;
-  margin-top: 20px;
-  opacity: 0.8;
+  color: var(--font-muted);
 }

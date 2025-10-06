@@ -1,6 +1,12 @@
 .navigation {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: clamp(14px, 3vw, 28px);
+  padding: 8px clamp(14px, 2vw, 18px);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(148, 163, 184, 0.15), rgba(30, 41, 59, 0.4));
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  box-shadow: var(--shadow-inner);
+  backdrop-filter: blur(calc(var(--blur-strength) * 0.6));
 }

@@ -1,35 +1,57 @@
-.modal {
-  border: 10px solid red;
+.modal :global(.ant-modal-content) {
+  background: linear-gradient(140deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.7));
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 35px 80px -50px rgba(15, 23, 42, 0.95);
+  padding: clamp(28px, 5vw, 40px);
+  color: var(--font-color);
 }
+
+.modal :global(.ant-modal-header),
+.modal :global(.ant-modal-footer) {
+  display: none;
+}
+
+.modal :global(.ant-modal-body) {
+  padding: 0;
+}
+
 .box {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--font-color);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-sm);
   cursor: pointer;
+  background: linear-gradient(145deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.18));
+  border: 1px dashed rgba(148, 163, 184, 0.35);
+  color: var(--font-color);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-medium);
+}
+
+.box:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 20px 35px -30px rgba(56, 189, 248, 0.65);
 }
 
 .icon {
-  font-size: 50px;
-  color: var(--font-color);
+  font-size: clamp(2.4rem, 4vw, 3.1rem);
 }
 
 .form {
   display: flex;
-  gap: 20px;
   flex-direction: column;
+  gap: 24px;
 }
+
 .list {
-  margin-top: 30px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  height: 350px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 18px;
+  max-height: clamp(280px, 45vh, 420px);
   overflow-y: auto;
-  padding: 10px;
-  width: 500px;
+  padding: 6px;
+  border-radius: var(--radius-sm);
 }

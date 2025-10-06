@@ -1,42 +1,54 @@
 .input {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  color: var(--bg-color);
-  background-color: var(--font-color);
-  border-radius: var(--border-radius);
-  border: 2px solid var(--bg-color);
-  height: 40px;
-  padding: 10px;
-  font-size: 16px;
-  font-weight: 700;
+  justify-content: flex-start;
+  gap: 0.85rem;
   width: fit-content;
-  gap: 20px;
-  overflow: hidden;
+  padding: 0.65rem 1rem;
+  color: var(--font-color);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.65));
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: var(--shadow-inner);
+  backdrop-filter: blur(calc(var(--blur-strength) * 0.5));
+  transition: border-color var(--transition-fast), box-shadow var(--transition-medium), transform var(--transition-fast);
 }
 
 .input:hover {
-  outline: 1px solid var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 35px -30px rgba(56, 189, 248, 0.55), var(--shadow-inner);
 }
-.input:focus {
-  outline: 2px solid var(--secondary-color);
+
+.input:focus-within {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
 }
 
 .disabled {
-  opacity: 0.3;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .label {
-  padding: 0 10px;
-  width: fit-content;
+  padding-right: 0.85rem;
   white-space: nowrap;
-  border-right: 1px solid black;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--font-muted);
+  border-right: 1px solid rgba(148, 163, 184, 0.24);
 }
 
 .value {
-  width: max(100%, 20px);
-  outline: none;
+  min-width: 60px;
+  background: transparent;
   border: none;
-  font-size: 16px;
+  outline: none;
+  font-size: 1rem;
   font-weight: 700;
+  color: var(--font-color);
+}
+
+.value::placeholder {
+  color: rgba(148, 163, 184, 0.6);
 }

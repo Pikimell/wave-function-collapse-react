@@ -1,47 +1,90 @@
 .container {
-  padding: 20px;
-  margin: 0 auto;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: clamp(28px, 7vh, 52px) auto;
+  padding: clamp(32px, 5vw, 52px);
+  max-width: 880px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(155deg, rgba(15, 23, 42, 0.94), rgba(30, 41, 59, 0.68));
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  position: relative;
+  isolation: isolate;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  inset: 10% 6%;
+  border-radius: inherit;
+  background: radial-gradient(80% 90% at 20% 0%, rgba(56, 189, 248, 0.18), transparent 70%),
+    radial-gradient(90% 80% at 85% 95%, rgba(249, 115, 22, 0.16), transparent 75%);
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #1a1a1a;
-  margin-bottom: 15px;
+  font-size: clamp(1.7rem, 3.6vw, 2.3rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   text-align: center;
+  color: var(--font-color);
 }
 
 .description {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: #333;
-  margin-bottom: 20px;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--font-muted);
+  text-align: center;
 }
 
 .steps {
-  list-style-type: decimal;
-  padding-left: 20px;
+  display: grid;
+  gap: 18px;
+  counter-reset: map-step;
 }
 
 .steps li {
+  counter-increment: map-step;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 18px;
+  align-items: center;
+  background: rgba(21, 31, 49, 0.65);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  padding: 18px 22px;
+  color: var(--font-color);
+}
+
+.steps li::before {
+  content: counter(map-step, decimal-leading-zero);
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 22px;
+  font-weight: 800;
   font-size: 1rem;
-  line-height: 1.5;
-  color: #444;
-  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  box-shadow: 0 20px 38px -25px rgba(168, 85, 247, 0.7);
 }
 
 .steps li strong {
-  font-weight: bold;
-  color: #222;
+  display: block;
+  color: var(--primary-color);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  text-transform: uppercase;
 }
 
 .footer {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #1a1a1a;
+  font-size: 0.95rem;
+  font-weight: 700;
   text-align: center;
-  margin-top: 20px;
+  letter-spacing: 0.1em;
+  color: var(--font-muted);
 }

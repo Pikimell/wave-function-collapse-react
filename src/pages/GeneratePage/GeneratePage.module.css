@@ -2,6 +2,6 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: stretch;
+  gap: clamp(24px, 5vh, 40px);
 }

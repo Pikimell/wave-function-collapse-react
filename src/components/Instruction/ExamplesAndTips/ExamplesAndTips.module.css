@@ -1,64 +1,88 @@
 .container {
-  padding: 20px;
-  margin: 0 auto;
-  background-color: var(--font-color);
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: clamp(28px, 7vh, 52px) auto;
+  padding: clamp(32px, 4.6vw, 50px);
+  max-width: 900px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(150deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.66));
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  isolation: isolate;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  inset: 8% 8%;
+  border-radius: inherit;
+  background: radial-gradient(85% 85% at 15% 0%, rgba(56, 189, 248, 0.18), transparent 70%),
+    radial-gradient(90% 80% at 85% 95%, rgba(168, 85, 247, 0.16), transparent 75%);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--bg-color);
-  margin-bottom: 15px;
+  font-size: clamp(1.8rem, 3.6vw, 2.3rem);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   text-align: center;
+  color: var(--font-color);
 }
 
 .description {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: var(--bg-color);
-  opacity: 0.7;
-  margin-bottom: 20px;
+  font-size: clamp(1rem, 2.1vw, 1.2rem);
+  line-height: 1.7;
+  color: var(--font-muted);
+  text-align: center;
 }
 
 .subtitle {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--bg-color);
-  margin-top: 20px;
-  margin-bottom: 10px;
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--primary-color);
+  text-transform: uppercase;
 }
 
 .examples {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .image {
-  max-width: 45%;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 18px 40px -28px rgba(15, 23, 42, 0.95);
+  object-fit: cover;
 }
 
 .tips {
-  list-style-type: disc;
-  padding-left: 20px;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 12px;
 }
 
 .tips li {
   font-size: 1rem;
-  line-height: 1.5;
-  color: var(--bg-color);
-  opacity: 0.7;
-  margin-bottom: 10px;
+  line-height: 1.6;
+  color: var(--font-color);
+}
+
+.tips li::marker {
+  color: var(--accent-color);
 }
 
 .footer {
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--bg-color);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-align: center;
-  margin-top: 20px;
+  color: var(--font-muted);
 }
