@@ -1,6 +1,4 @@
-import { Flex } from 'antd';
 import Button from '../custom/Button/Button';
-import Input from '../custom/Input/Input';
 import style from './GenerateMenu.module.css';
 
 const GenerateMenu = ({

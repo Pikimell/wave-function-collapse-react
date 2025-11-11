@@ -16,8 +16,13 @@ const TileList = () => {
     {
       event: 'keydown',
       callback: e => {
-        if (e.code === 'Backspace') {
-          dispatch(removeTile(currentTile?.id));
+        if (e.code === 'Backspace' && currentTile?.id) {
+          dispatch(
+            removeTile({
+              projectId: currentTile.projectId,
+              tileId: currentTile.id,
+            }),
+          );
         }
       },
     },

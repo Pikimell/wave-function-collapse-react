@@ -1,19 +1,26 @@
 .logo {
-  cursor: pointer;
-  margin: 0 auto;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
-}
-
-.logo h1 {
-  font-size: 20px;
-}
-
-.icon {
-  font-size: 40px;
+  gap: var(--spacing-sm);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-md);
+  color: var(--font-color);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform var(--transition-base), color var(--transition-base),
+    background var(--transition-base);
 }
 
 .logo:hover {
+  transform: scale(1.02);
+  background: rgba(56, 189, 248, 0.1);
   color: var(--secondary-color);
+}
+
+.icon {
+  font-size: 2rem;
+  color: var(--secondary-color);
+  filter: drop-shadow(0 4px 8px rgba(56, 189, 248, 0.4));
 }

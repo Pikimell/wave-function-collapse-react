@@ -1,16 +1,24 @@
 .box {
-  width: 150px;
-  height: 150px;
-  min-height: 150px;
+  width: 100px;
+  min-height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--font-color);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-md);
+  border: 2px dashed rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.08);
+  color: var(--secondary-color);
   cursor: pointer;
+  transition: background var(--transition-base),
+    border-color var(--transition-base), transform var(--transition-base);
+}
+
+.box:hover {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: var(--secondary-color);
+  transform: translateY(-2px);
 }
 
 .icon {
-  font-size: 50px;
-  color: var(--font-color);
+  font-size: 2rem;
 }

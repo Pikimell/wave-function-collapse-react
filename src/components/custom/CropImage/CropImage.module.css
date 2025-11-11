@@ -1,31 +1,35 @@
 .crop-container {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 20px;
-  position: relative;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
 }
 
 .crop-box {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 20px;
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm);
+  background: var(--surface-elevated);
+  border-radius: var(--radius-md);
 }
 
 .crop {
-  margin: 0 auto;
-  border: 2px solid var(--bg-color);
-  background-color: #818181;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.6);
 }
 
 .box {
-  width: 250px;
-  height: 250px;
   position: absolute;
-  border: 3px solid var(--secondary-color);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  inset: calc(var(--spacing-sm) / 2);
+  border: 2px dashed rgba(248, 250, 252, 0.5);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+  transition: opacity var(--transition-base);
 }

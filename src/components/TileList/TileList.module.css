@@ -1,35 +1,33 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
-  border: 2px solid var(--font-color);
-  border-radius: var(--border-radius);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
   height: 100%;
-  width: 230px;
-  gap: 20px;
 }
 
 .title {
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: 2%;
-  margin-bottom: 32px;
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--font-muted);
 }
 
 .list {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 5px 0;
+  gap: var(--spacing-sm);
+  list-style: none;
+  height: 100%;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
 }
 
 .tile {
-  width: 150px;
-  height: 150px;
+  list-style: none;
 }

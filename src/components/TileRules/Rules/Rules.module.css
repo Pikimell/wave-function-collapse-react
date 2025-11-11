@@ -1,38 +1,35 @@
 .rule-container {
   display: flex;
-  align-items: center;
-  height: 130px;
-  padding: 15px;
-  gap: 16px;
-  border: 1px solid black;
-  border-radius: var(--border-radius);
-  margin: 7px;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--surface-elevated);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(148, 163, 184, 0.3);
 }
 
 .title {
-  font-weight: bold;
-  font-size: 36px;
-  text-align: center;
-  min-width: 110px;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--font-muted);
 }
 
 .line {
-  width: 2px;
-  height: 100%;
-  background-color: var(--font-color);
+  height: 1px;
+  background: rgba(148, 163, 184, 0.2);
 }
 
 .list {
   display: flex;
-  align-items: center;
-  overflow-x: scroll;
-  width: 100%;
-  gap: 30px;
-  height: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  gap: 5px;
+  max-width: 800px;
 }
 
 .tile-container {
-  min-width: 75px;
-  width: 75px;
-  height: 75px;
+  list-style: none;
 }

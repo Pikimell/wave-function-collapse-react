@@ -3,13 +3,47 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: var(--spacing-lg);
 }
 
 .base-container {
-  height: 664px;
+  height: 700px;
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.header {
+  width: 100%;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--font-muted);
+}
+
+.placeholder {
+  width: 100%;
+  max-width: 720px;
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
 }

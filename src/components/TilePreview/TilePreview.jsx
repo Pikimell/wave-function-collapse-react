@@ -47,17 +47,37 @@ const TilePreview = () => {
   return (
     <div className={style.container}>
       <div>
-        <TileBlock className={style.tile} tile={tileList.up} />
+        <TileBlock
+          className={style.tile}
+          tile={tileList.up}
+          clickable={false}
+        />
       </div>
 
       <Flex align="center" gap="5px">
-        <TileBlock className={style.tile} tile={tileList.left} />
-        <TileBlock className={style.tile} tile={currentTile} />
-        <TileBlock className={style.tile} tile={tileList.right} />
+        <TileBlock
+          className={style.tile}
+          tile={tileList.left}
+          clickable={false}
+        />
+        <TileBlock
+          className={style.tile}
+          tile={currentTile}
+          clickable={false}
+        />
+        <TileBlock
+          className={style.tile}
+          tile={tileList.right}
+          clickable={false}
+        />
       </Flex>
 
       <div>
-        <TileBlock className={style.tile} tile={tileList.down} />
+        <TileBlock
+          className={style.tile}
+          tile={tileList.down}
+          clickable={false}
+        />
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import style from './Instruction.module.css';
 import AboutProject from './AboutProject/AboutProject';
 import ExamplesAndTips from './ExamplesAndTips/ExamplesAndTips';
 import FAQ from './FAQ/FAQ';
@@ -11,11 +10,11 @@ import SetTileStates from './SetTileStates/SetTileStates';
 import SupportFeedback from './SupportFeedback/SupportFeedback';
 import Troubleshooting from './Troubleshooting/Troubleshooting';
 import UploadTiles from './UploadTiles/UploadTiles';
-import { Flex } from 'antd';
+import style from './Instruction.module.css';
 
 const Instruction = ({}) => {
   return (
-    <>
+    <div className={style.container}>
       <AboutProject />
       <GettingStarted />
       <UploadTiles />
@@ -28,7 +27,7 @@ const Instruction = ({}) => {
       <Troubleshooting />
       <FAQ />
       <SupportFeedback />
-    </>
+    </div>
   );
 };
 

@@ -1,35 +1,72 @@
-.modal {
-  border: 10px solid red;
-}
 .box {
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--font-color);
-  border-radius: var(--border-radius);
+  border: 2px dashed rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-md);
+  background: rgba(56, 189, 248, 0.08);
+  color: var(--secondary-color);
   cursor: pointer;
+  transition: background var(--transition-base),
+    border-color var(--transition-base), transform var(--transition-base);
+}
+
+.box:hover {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: var(--secondary-color);
+  transform: translateY(-2px);
 }
 
 .icon {
-  font-size: 50px;
-  color: var(--font-color);
+  font-size: 2.2rem;
+}
+
+.modal :global(.ant-modal-content) {
+  background: var(--surface-color);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
+}
+
+.modal :global(.ant-modal-header),
+.modal :global(.ant-modal-footer) {
+  background: transparent;
+  border: none;
 }
 
 .form {
   display: flex;
-  gap: 20px;
   flex-direction: column;
+  gap: var(--spacing-md);
 }
-.list {
-  margin-top: 30px;
+
+.toggle-row {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  height: 350px;
+  gap: var(--spacing-sm);
+  width: fit-content;
+}
+
+.toggle-label {
+  font-size: 0.9rem;
+  color: var(--font-muted);
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--font-muted);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--spacing-sm);
+  max-height: 340px;
   overflow-y: auto;
-  padding: 10px;
-  width: 500px;
+  margin-bottom: var(--spacing-sm);
+  padding-right: 4px;
 }

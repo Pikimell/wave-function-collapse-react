@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage'; // LocalStorage
 import tilesReducer from './tiles/slice';
 
 const persistConfig = {
-  key: 'tiles',
+  key: 'wfc',
   storage,
 };
 

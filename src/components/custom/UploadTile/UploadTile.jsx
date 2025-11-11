@@ -4,11 +4,14 @@ import { FiPlus } from 'react-icons/fi';
 import CropImage from '../CropImage/CropImage';
 import { useModal } from '../../../hooks/useModal';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTile } from '../../../redux/tiles/slice';
+import { analyzeTileEdges } from '../../../utils/colorMatching';
+import { selectCurrentProjectId } from '../../../redux/tiles/selector';
 
 const UploadTile = () => {
   const dispatch = useDispatch();
+  const currentProjectId = useSelector(selectCurrentProjectId);
   const [modalIsOpen, openModal, closeModal] = useModal();
   const [image, setImage] = useState(null);
 
@@ -20,6 +23,11 @@ const UploadTile = () => {
     input.multiple = 'true';
     input.onchange = event => {
       const fileList = event.target.files;
+
+      if (!currentProjectId) {
+        console.warn('Project is not selected. Cannot add tiles.');
+        return;
+      }
 
       if (fileList.length === 1) {
         const file = fileList[0];
@@ -45,8 +53,22 @@ const UploadTile = () => {
 
   // Обробка збереження редагованого зображення
   const handleSave = async url => {
-    dispatch(addTile(url));
-    closeModal();
+    try {
+      if (!currentProjectId) {
+        console.warn('Project is not selected. Cannot add tiles.');
+        return;
+      }
+
+      const edgeColors = await analyzeTileEdges(url);
+      dispatch(addTile({ projectId: currentProjectId, url, edgeColors }));
+    } catch (error) {
+      console.error('Failed to analyze tile edges', error);
+      if (currentProjectId) {
+        dispatch(addTile({ projectId: currentProjectId, url }));
+      }
+    } finally {
+      closeModal();
+    }
   };
 
   return (

@@ -1,3 +1,8 @@
 .footer {
-  padding: 10px;
+  margin-top: auto;
+  padding: var(--spacing-md) 0;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--font-muted);
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
 }

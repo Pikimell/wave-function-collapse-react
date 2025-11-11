@@ -13,7 +13,7 @@ const Rules = ({ tile, type = 'left' }) => {
   const handleSave = currentTileIds => {
     for (const id of currentTileIds) {
       const data = {
-        oldTile: tile,
+        projectId: tile.projectId,
         tileId: tile.id,
         ruleType: type,
         ruleValue: id,
@@ -24,6 +24,7 @@ const Rules = ({ tile, type = 'left' }) => {
 
   const handleDelete = ruleId => {
     const data = {
+      projectId: tile.projectId,
       tileId: tile.id,
       ruleType: type,
       ruleId,
@@ -37,7 +38,12 @@ const Rules = ({ tile, type = 'left' }) => {
       <div className={style.line}></div>
       <ul className={style.list}>
         <li className={style['tile-container']}>
-          <SelectTile blackList={ruleList} onSave={handleSave} />
+          <SelectTile
+            blackList={ruleList}
+            onSave={handleSave}
+            ruleType={type}
+            referenceTile={tile}
+          />
         </li>
         {ruleList.toReversed().map(tileId => {
           const tile = tiles[tileId];
