@@ -89,7 +89,14 @@ export function updateOptions(map, cell, tiles) {
   }
 }
 
-export function collapseStep(map, tiles, canvas, queue = [], render = true) {
+export function collapseStep(
+  map,
+  tiles,
+  canvas,
+  queue = [],
+  render = true,
+  entropyMode = 'count',
+) {
   queue.sort((a, b) => a.options.length - b.options.length);
 
   const cell = nextItemOfQueue(queue) || findLowestEntropy(map);
@@ -101,6 +108,9 @@ export function collapseStep(map, tiles, canvas, queue = [], render = true) {
 
   collapsedCell(cell);
   if (render) renderCell(canvas, cell, tiles, map.length);
+  if (render && entropyMode !== 'none') {
+    renderEntropy(canvas, map, entropyMode);
+  }
 
   const neighbors = getNeighbors(cell, map);
   for (const itemCell of Object.values(neighbors)) {
@@ -113,12 +123,18 @@ export function collapseStep(map, tiles, canvas, queue = [], render = true) {
   }
 }
 
-export function generate({ size = 10, tiles, delay = 10, canvas }) {
+export function generate({
+  size = 10,
+  tiles,
+  delay = 10,
+  canvas,
+  entropyMode = 'count',
+}) {
   const options = Object.keys(tiles);
   const map = createMap(size, options);
 
   const intervalId = setInterval(() => {
-    collapseStep(map, tiles, canvas);
+    collapseStep(map, tiles, canvas, [], true, entropyMode);
     const isEnd = isAlgorithmComplete(map);
     if (isEnd) clearInterval(intervalId);
   }, delay);
@@ -158,6 +174,113 @@ export function renderCell(canvas, cell, tiles, size) {
   img.onerror = () => {
     console.error(`Failed to load image at "${tile.url}".`);
   };
+}
+
+const HEATMAP_STOPS = [
+  { stop: 0, color: [59, 130, 246] }, // cool blue
+  { stop: 0.5, color: [252, 211, 77] }, // warm yellow
+  { stop: 1, color: [220, 38, 38] }, // hot red
+];
+
+const lerp = (a, b, t) => a + (b - a) * t;
+
+const interpolateColor = (value, stops = HEATMAP_STOPS) => {
+  if (value <= stops[0].stop) return stops[0].color;
+  if (value >= stops[stops.length - 1].stop) {
+    return stops[stops.length - 1].color;
+  }
+
+  for (let i = 0; i < stops.length - 1; i++) {
+    const current = stops[i];
+    const next = stops[i + 1];
+    if (value >= current.stop && value <= next.stop) {
+      const localT = (value - current.stop) / (next.stop - current.stop);
+      return [
+        Math.round(lerp(current.color[0], next.color[0], localT)),
+        Math.round(lerp(current.color[1], next.color[1], localT)),
+        Math.round(lerp(current.color[2], next.color[2], localT)),
+      ];
+    }
+  }
+
+  return stops[stops.length - 1].color;
+};
+
+const renderEntropyBadges = (ctx, map, cellSize) => {
+  const badgePadding = Math.max(cellSize * 0.08, 2);
+  const badgeSize = Math.max(
+    Math.min(cellSize * 0.45, cellSize - badgePadding * 2),
+    14,
+  );
+  const fontSize = Math.max(Math.min(badgeSize * 0.6, cellSize * 0.6), 10);
+
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = `${fontSize}px sans-serif`;
+
+  map.forEach(cell => {
+    if (!cell?.options || cell.options.length <= 1) return;
+    const { x, y } = cell.position;
+    const entropy = cell.options.length;
+    const badgeX = x * cellSize + cellSize - badgeSize - badgePadding;
+    const badgeY = y * cellSize + badgePadding;
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.fillRect(badgeX, badgeY, badgeSize, badgeSize);
+
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.25)';
+    ctx.lineWidth = Math.max(cellSize * 0.02, 1);
+    ctx.strokeRect(badgeX, badgeY, badgeSize, badgeSize);
+
+    ctx.fillStyle = '#111';
+    ctx.fillText(entropy, badgeX + badgeSize / 2, badgeY + badgeSize / 2);
+  });
+
+  ctx.restore();
+};
+
+const renderEntropyHeatmap = (ctx, map, cellSize) => {
+  const candidates = map.filter(
+    cell => cell?.options && cell.options.length > 1,
+  );
+  if (!candidates.length) return;
+
+  const entropies = candidates.map(cell => cell.options.length);
+  const minEntropy = Math.min(...entropies);
+  const maxEntropy = Math.max(...entropies);
+  const range = Math.max(maxEntropy - minEntropy, 1);
+
+  ctx.save();
+
+  candidates.forEach(cell => {
+    const { x, y } = cell.position;
+    const normalized = (cell.options.length - minEntropy) / range;
+    const [r, g, b] = interpolateColor(normalized);
+    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.45)`;
+    ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+  });
+
+  ctx.restore();
+};
+
+export function renderEntropy(canvas, map, mode = 'count') {
+  if (!canvas || !map?.length || mode === 'none') return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const gridSize = Math.sqrt(map.length);
+  if (!Number.isFinite(gridSize) || gridSize <= 0) return;
+
+  const cellSize = canvas.width / gridSize;
+
+  if (mode === 'heatmap') {
+    renderEntropyHeatmap(ctx, map, cellSize);
+    return;
+  }
+
+  renderEntropyBadges(ctx, map, cellSize);
 }
 
 export function clearCanvas(canvas) {

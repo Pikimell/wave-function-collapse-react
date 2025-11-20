@@ -21,6 +21,7 @@ const GeneratePage = ({}) => {
     isActive,
     hasResult,
     result,
+    setEntropyVisualization,
   } = useMapGenerate();
 
   const dispatch = useDispatch();
@@ -30,13 +31,14 @@ const GeneratePage = ({}) => {
   const projects = useSelector(selectProjectList);
   const currentProjectId = useSelector(selectCurrentProjectId);
   const [params, setParams] = useState({ size: 10, spriteSize: 50 });
+  const [entropyMode, setEntropyMode] = useState('count');
 
   const handleStart = () => {
     const size = params.size;
     const canvas = canvasRef.current;
 
     if (size && canvas && tiles) {
-      startGenerate({ size, canvas, tiles });
+      startGenerate({ size, canvas, tiles, entropyMode });
     }
   };
   const handleQuickStart = () => {
@@ -44,7 +46,7 @@ const GeneratePage = ({}) => {
     const canvas = canvasRef.current;
 
     if (size && canvas && tiles) {
-      quickGenerate({ size, canvas, tiles });
+      quickGenerate({ size, canvas, tiles, entropyMode });
     }
   };
   const handleSaveImage = () => {
@@ -86,6 +88,15 @@ const GeneratePage = ({}) => {
     }
   };
 
+  const handleEntropyModeChange = event => {
+    const selectedMode = event.target.value;
+    setEntropyMode(selectedMode);
+    const canvas = canvasRef.current;
+    if (canvas) {
+      setEntropyVisualization({ mode: selectedMode, canvas, tiles });
+    }
+  };
+
   const tileCount = Object.keys(tiles).length;
 
   return (
@@ -123,6 +134,18 @@ const GeneratePage = ({}) => {
           isActive={isActive}
           hasResult={hasResult}
         />
+        <label className={style['entropy-toggle']}>
+          <span className={style['entropy-label']}>Entropy overlay</span>
+          <select
+            className={style['entropy-select']}
+            value={entropyMode}
+            onChange={handleEntropyModeChange}
+          >
+            <option value="none">Hidden</option>
+            <option value="count">Numbers</option>
+            <option value="heatmap">Heat map</option>
+          </select>
+        </label>
       </div>
 
       <Canvas canvasRef={canvasRef} params={params} setParams={setParams} />
