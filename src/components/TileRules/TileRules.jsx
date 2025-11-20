@@ -18,7 +18,8 @@ const TileRules = () => {
   const tileList = Object.values(tiles);
 
   const hasAnalyzedEdges = tileList.some(item => item?.edgeColors);
-  const canAutoGenerate = currentProjectId && tileList.length && hasAnalyzedEdges;
+  const canAutoGenerate =
+    currentProjectId && tileList.length && hasAnalyzedEdges;
 
   const handleAutoGenerate = () => {
     if (!canAutoGenerate) return;
@@ -40,7 +41,7 @@ const TileRules = () => {
           onClick={handleAutoGenerate}
           disabled={!canAutoGenerate}
         >
-          Заповнити автоматично
+          Add rules (auto)
         </Button>
       </div>
 

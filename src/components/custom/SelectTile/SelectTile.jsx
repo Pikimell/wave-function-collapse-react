@@ -110,7 +110,12 @@ const SelectTile = ({
       <div className={style.box} onClick={handleClick}>
         <FiPlus className={style.icon} />
       </div>
-      <Modal className={style.modal} open={modalIsOpen} onCancel={closeModal} footer={null}>
+      <Modal
+        className={style.modal}
+        open={modalIsOpen}
+        onCancel={closeModal}
+        footer={null}
+      >
         <form className={style.form} onSubmit={handleSave}>
           <div className={style['toggle-row']}>
             <span className={style['toggle-label']}>Show recommended only</span>
@@ -123,7 +128,7 @@ const SelectTile = ({
           </div>
           {!hasSuggestions && (
             <p className={style.hint}>
-              Немає автоматичних рекомендацій для цього напрямку.
+              There are no automatic recommendations for this direction.
             </p>
           )}
           <ul className={style.list}>

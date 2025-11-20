@@ -8,8 +8,12 @@ const GenerateMenu = ({
   onSaveJSON,
   onQuickStart,
   isActive,
+  onStep,
+  isStepping,
   hasResult = false,
 }) => {
+  const isStepDisabled = isActive && !isStepping;
+
   return (
     <div className={style.container}>
       <Button onClick={onStart} disabled={isActive}>
@@ -17,6 +21,9 @@ const GenerateMenu = ({
       </Button>
       <Button onClick={onQuickStart} disabled={isActive}>
         Quick Generate
+      </Button>
+      <Button onClick={onStep} disabled={isStepDisabled}>
+        Step Collapse
       </Button>
       <Button onClick={onStop} disabled={!isActive}>
         Stop Generate

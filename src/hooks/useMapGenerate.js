@@ -10,10 +10,12 @@ import {
 
 export const useMapGenerate = () => {
   const [isActive, setIsActive] = useState(false);
+  const [isStepping, setIsStepping] = useState(false);
   const [hasResult, setHasResult] = useState(false);
   const [result, setResult] = useState(null);
   const intervalRef = useRef(null);
   const mapRef = useRef(null);
+  const queueRef = useRef([]);
   const entropyModeRef = useRef('count');
 
   useEffect(() => {
@@ -24,6 +26,31 @@ export const useMapGenerate = () => {
     };
   }, []);
 
+  const initializeGeneration = ({
+    size,
+    canvas,
+    tiles,
+    entropyMode = 'count',
+  }) => {
+    const options = Object.keys(tiles || {});
+    if (!options.length || !canvas) return null;
+
+    clearCanvas(canvas);
+    setResult(null);
+    setHasResult(false);
+    entropyModeRef.current = entropyMode;
+
+    const newMap = createMap(size, options);
+    mapRef.current = newMap;
+    queueRef.current = [];
+
+    if (entropyModeRef.current !== 'none') {
+      renderEntropy(canvas, newMap, entropyModeRef.current);
+    }
+
+    return newMap;
+  };
+
   const startGenerate = ({
     size = 10,
     canvas,
@@ -31,26 +58,25 @@ export const useMapGenerate = () => {
     delay = 10,
     entropyMode = 'count',
   }) => {
-    const options = Object.keys(tiles);
-    if (!options.length) return;
-    setIsActive(true);
-    setHasResult(false);
-    clearCanvas(canvas);
-    entropyModeRef.current = entropyMode;
+    stopGenerate();
+    const newMap = initializeGeneration({
+      size,
+      canvas,
+      tiles,
+      entropyMode,
+    });
+    if (!newMap) return;
 
-    const newMap = createMap(size, options);
-    mapRef.current = newMap;
-    if (entropyModeRef.current !== 'none') {
-      renderEntropy(canvas, newMap, entropyModeRef.current);
-    }
-    const queue = [];
+    setIsActive(true);
+    setIsStepping(false);
+    setHasResult(false);
 
     intervalRef.current = setInterval(() => {
       collapseStep(
         newMap,
         tiles,
         canvas,
-        queue,
+        queueRef.current,
         true,
         entropyModeRef.current,
       );
@@ -59,10 +85,9 @@ export const useMapGenerate = () => {
         setHasResult(true);
         setResult(newMap);
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     }, delay);
-
-    setTimeout(() => stopGenerate, 3000);
   };
 
   const quickGenerate = ({
@@ -71,26 +96,26 @@ export const useMapGenerate = () => {
     tiles,
     entropyMode = 'count',
   }) => {
-    clearCanvas(canvas);
+    stopGenerate();
+    const newMap = initializeGeneration({
+      size,
+      canvas,
+      tiles,
+      entropyMode,
+    });
+    if (!newMap) return;
+
     setIsActive(true);
-    setHasResult(false);
+    setIsStepping(false);
     const maxTime = 30000;
     const initTime = Date.now();
-    const options = Object.keys(tiles);
-    const newMap = createMap(size, options);
-    mapRef.current = newMap;
-    entropyModeRef.current = entropyMode;
-    if (entropyModeRef.current !== 'none') {
-      renderEntropy(canvas, newMap, entropyModeRef.current);
-    }
-    const queue = [];
 
     while (initTime + maxTime > Date.now()) {
       collapseStep(
         newMap,
         tiles,
         canvas,
-        queue,
+        queueRef.current,
         true,
         entropyModeRef.current,
       );
@@ -107,8 +132,51 @@ export const useMapGenerate = () => {
     console.log(`Кількість спрайтів: ${size};\nЧас виконання: ${diff}ms;`);
   };
 
+  const stepGenerate = ({
+    size = 10,
+    canvas,
+    tiles,
+    entropyMode = 'count',
+  }) => {
+    const needsInitialization =
+      !mapRef.current || isAlgorithmComplete(mapRef.current);
+
+    if (needsInitialization) {
+      stopGenerate();
+      const newMap = initializeGeneration({
+        size,
+        canvas,
+        tiles,
+        entropyMode,
+      });
+      if (!newMap) return;
+      setIsActive(true);
+      setIsStepping(true);
+    } else if (!isStepping) {
+      setIsActive(true);
+      setIsStepping(true);
+    }
+
+    collapseStep(
+      mapRef.current,
+      tiles,
+      canvas,
+      queueRef.current,
+      true,
+      entropyModeRef.current,
+    );
+
+    if (isAlgorithmComplete(mapRef.current)) {
+      setIsActive(false);
+      setIsStepping(false);
+      setHasResult(true);
+      setResult(mapRef.current);
+    }
+  };
+
   const stopGenerate = () => {
     setIsActive(false);
+    setIsStepping(false);
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
@@ -144,7 +212,9 @@ export const useMapGenerate = () => {
     startGenerate,
     quickGenerate,
     stopGenerate,
+    stepGenerate,
     result,
     setEntropyVisualization,
+    isStepping,
   };
 };

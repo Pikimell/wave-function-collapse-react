@@ -22,6 +22,8 @@ const GeneratePage = ({}) => {
     hasResult,
     result,
     setEntropyVisualization,
+    stepGenerate,
+    isStepping,
   } = useMapGenerate();
 
   const dispatch = useDispatch();
@@ -47,6 +49,14 @@ const GeneratePage = ({}) => {
 
     if (size && canvas && tiles) {
       quickGenerate({ size, canvas, tiles, entropyMode });
+    }
+  };
+  const handleStep = () => {
+    const size = params.size;
+    const canvas = canvasRef.current;
+
+    if (size && canvas && tiles) {
+      stepGenerate({ size, canvas, tiles, entropyMode });
     }
   };
   const handleSaveImage = () => {
@@ -131,7 +141,9 @@ const GeneratePage = ({}) => {
           onSaveImage={handleSaveImage}
           onSaveJSON={handleSaveJSON}
           onQuickStart={handleQuickStart}
+          onStep={handleStep}
           isActive={isActive}
+          isStepping={isStepping}
           hasResult={hasResult}
         />
         <label className={style['entropy-toggle']}>
