@@ -13,6 +13,11 @@ export const useMapGenerate = () => {
   const [isStepping, setIsStepping] = useState(false);
   const [hasResult, setHasResult] = useState(false);
   const [result, setResult] = useState(null);
+  const [stats, setStats] = useState({
+    entropy: 0,
+    solved: 0,
+    neighborOptions: 0,
+  });
   const intervalRef = useRef(null);
   const mapRef = useRef(null);
   const queueRef = useRef([]);
@@ -25,6 +30,22 @@ export const useMapGenerate = () => {
       }
     };
   }, []);
+
+  const updateStats = () => {
+    const map = mapRef.current || [];
+    const solved = map.filter(cell => cell?.collapsed).length;
+    const unCollapsed = map.filter(cell => !cell?.collapsed);
+    const entropyOptions = unCollapsed.map(
+      cell => cell?.options?.length ?? 0,
+    );
+    const entropy = entropyOptions.length ? Math.min(...entropyOptions) : 0;
+    const neighborOptions = queueRef.current.reduce(
+      (acc, cell) => acc + (cell?.options?.length || 0),
+      0,
+    );
+
+    setStats({ entropy, solved, neighborOptions });
+  };
 
   const initializeGeneration = ({
     size,
@@ -47,6 +68,8 @@ export const useMapGenerate = () => {
     if (entropyModeRef.current !== 'none') {
       renderEntropy(canvas, newMap, entropyModeRef.current);
     }
+
+    updateStats();
 
     return newMap;
   };
@@ -80,6 +103,7 @@ export const useMapGenerate = () => {
         true,
         entropyModeRef.current,
       );
+      updateStats();
       if (isAlgorithmComplete(newMap)) {
         setIsActive(false);
         setHasResult(true);
@@ -128,6 +152,7 @@ export const useMapGenerate = () => {
     }
 
     setIsActive(false);
+    updateStats();
     const diff = Date.now() - initTime;
     console.log(`Кількість спрайтів: ${size};\nЧас виконання: ${diff}ms;`);
   };
@@ -165,6 +190,7 @@ export const useMapGenerate = () => {
       true,
       entropyModeRef.current,
     );
+    updateStats();
 
     if (isAlgorithmComplete(mapRef.current)) {
       setIsActive(false);
@@ -216,5 +242,6 @@ export const useMapGenerate = () => {
     result,
     setEntropyVisualization,
     isStepping,
+    stats,
   };
 };

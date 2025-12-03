@@ -32,7 +32,14 @@ const TileBlock = ({
       onClick={handleClick}
       {...props}
     >
-      {tile?.url && <img className={style.image} src={tile.url} alt="tile" />}
+      {tile?.url && (
+        <img
+          className={style.image}
+          src={tile.url}
+          alt="tile"
+          style={{ transform: `rotate(${tile.rotation || 0}deg)` }}
+        />
+      )}
     </div>
   );
 };

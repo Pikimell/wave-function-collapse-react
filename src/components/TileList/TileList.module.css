@@ -17,6 +17,19 @@
   color: var(--font-muted);
 }
 
+.rotate-button {
+  margin-left: auto;
+  width: 100%;
+}
+
+.mirror-button {
+  width: 100%;
+}
+
+.dedupe-button {
+  width: 100%;
+}
+
 .list {
   display: flex;
   flex-direction: column;

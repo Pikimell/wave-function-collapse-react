@@ -27,17 +27,38 @@ const initialState = {
   currentTileId: null,
 };
 
-const createTile = ({ projectId, url, edgeColors }) => ({
+const normalizeRotation = value => {
+  if (!Number.isFinite(value)) return 0;
+  return ((value % 360) + 360) % 360;
+};
+
+const cloneRules = rules => {
+  if (!rules || typeof rules !== 'object') {
+    return {
+      left: [],
+      right: [],
+      up: [],
+      down: [],
+    };
+  }
+
+  return {
+    left: Array.isArray(rules.left) ? [...rules.left] : [],
+    right: Array.isArray(rules.right) ? [...rules.right] : [],
+    up: Array.isArray(rules.up) ? [...rules.up] : [],
+    down: Array.isArray(rules.down) ? [...rules.down] : [],
+  };
+};
+
+const createTile = ({ projectId, url, edgeColors, rotation, rules }) => ({
   id: generateID(),
   projectId,
   url,
   rules: {
-    left: [],
-    right: [],
-    up: [],
-    down: [],
+    ...cloneRules(rules),
   },
   edgeColors: edgeColors || null,
+  rotation: normalizeRotation(rotation),
   createdAt: Date.now(),
 });
 
@@ -103,6 +124,7 @@ export const sliceTiles = createSlice({
         projectId,
         url: imageUrl,
         edgeColors: data.edgeColors,
+        rotation: data.rotation,
       });
 
       project.tiles[tile.id] = tile;

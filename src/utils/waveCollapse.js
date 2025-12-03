@@ -167,8 +167,15 @@ export function renderCell(canvas, cell, tiles, size) {
     const x = cell.position.x * cellSize;
     const y = cell.position.y * cellSize;
 
+    ctx.save();
+    // Центруємо систему координат у середині клітинки для обертання
+    ctx.translate(x + cellSize / 2, y + cellSize / 2);
+    const angle = ((tile.rotation || 0) * Math.PI) / 180;
+    if (angle !== 0) ctx.rotate(angle);
+
     // Малюємо фрейм у відповідній позиції
-    ctx.drawImage(img, x, y, cellSize, cellSize);
+    ctx.drawImage(img, -cellSize / 2, -cellSize / 2, cellSize, cellSize);
+    ctx.restore();
   };
 
   img.onerror = () => {
@@ -176,10 +183,11 @@ export function renderCell(canvas, cell, tiles, size) {
   };
 }
 
+// Orange-only gradient for entropy heatmap
 const HEATMAP_STOPS = [
-  { stop: 0, color: [59, 130, 246] }, // cool blue
-  { stop: 0.5, color: [252, 211, 77] }, // warm yellow
-  { stop: 1, color: [220, 38, 38] }, // hot red
+  { stop: 0, color: [255, 237, 213] }, // soft peach
+  { stop: 0.5, color: [251, 146, 60] }, // mid orange
+  { stop: 1, color: [194, 65, 12] }, // deep burnt orange
 ];
 
 const lerp = (a, b, t) => a + (b - a) * t;

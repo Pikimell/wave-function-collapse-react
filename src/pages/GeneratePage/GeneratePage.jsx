@@ -3,7 +3,7 @@ import Canvas from '../../components/Canvas/Canvas';
 import GenerateMenu from '../../components/GenerateMenu/GenerateMenu';
 import { useMapGenerate } from '../../hooks/useMapGenerate';
 import style from './GeneratePage.module.css';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {
   selectCurrentProjectId,
   selectProjectList,
@@ -12,6 +12,7 @@ import {
 import { selectProject } from '../../redux/tiles/slice';
 import Button from '../../components/custom/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { createRotatedTiles } from '../../utils/tileRotations';
 
 const GeneratePage = ({}) => {
   const {
@@ -24,12 +25,14 @@ const GeneratePage = ({}) => {
     setEntropyVisualization,
     stepGenerate,
     isStepping,
+    stats,
   } = useMapGenerate();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const canvasRef = useRef();
   const tiles = useSelector(selectTiles);
+  const rotatedTiles = useMemo(() => createRotatedTiles(tiles), [tiles]);
   const projects = useSelector(selectProjectList);
   const currentProjectId = useSelector(selectCurrentProjectId);
   const [params, setParams] = useState({ size: 10, spriteSize: 50 });
@@ -39,24 +42,24 @@ const GeneratePage = ({}) => {
     const size = params.size;
     const canvas = canvasRef.current;
 
-    if (size && canvas && tiles) {
-      startGenerate({ size, canvas, tiles, entropyMode });
+    if (size && canvas && rotatedTiles) {
+      startGenerate({ size, canvas, tiles: rotatedTiles, entropyMode });
     }
   };
   const handleQuickStart = () => {
     const size = params.size;
     const canvas = canvasRef.current;
 
-    if (size && canvas && tiles) {
-      quickGenerate({ size, canvas, tiles, entropyMode });
+    if (size && canvas && rotatedTiles) {
+      quickGenerate({ size, canvas, tiles: rotatedTiles, entropyMode });
     }
   };
   const handleStep = () => {
     const size = params.size;
     const canvas = canvasRef.current;
 
-    if (size && canvas && tiles) {
-      stepGenerate({ size, canvas, tiles, entropyMode });
+    if (size && canvas && rotatedTiles) {
+      stepGenerate({ size, canvas, tiles: rotatedTiles, entropyMode });
     }
   };
   const handleSaveImage = () => {
@@ -103,7 +106,11 @@ const GeneratePage = ({}) => {
     setEntropyMode(selectedMode);
     const canvas = canvasRef.current;
     if (canvas) {
-      setEntropyVisualization({ mode: selectedMode, canvas, tiles });
+      setEntropyVisualization({
+        mode: selectedMode,
+        canvas,
+        tiles: rotatedTiles,
+      });
     }
   };
 
@@ -146,21 +153,36 @@ const GeneratePage = ({}) => {
           isStepping={isStepping}
           hasResult={hasResult}
         />
-        <label className={style['entropy-toggle']}>
-          <span className={style['entropy-label']}>Entropy overlay</span>
-          <select
-            className={style['entropy-select']}
-            value={entropyMode}
-            onChange={handleEntropyModeChange}
-          >
-            <option value="none">Hidden</option>
-            <option value="count">Numbers</option>
-            <option value="heatmap">Heat map</option>
-          </select>
-        </label>
+        <div className={style['stats-panel']}>
+          <div className={style['stats-header']}>Statistics by step</div>
+          <div className={style['stats-grid']}>
+            <div className={style['stat-item']}>
+              <span className={style['stat-label']}>Entropy</span>
+              <span className={style['stat-value']}>{stats.entropy}</span>
+            </div>
+            <div className={style['stat-item']}>
+              <span className={style['stat-label']}>Collapsed cell</span>
+              <span className={style['stat-value']}>{stats.solved}</span>
+            </div>
+            <div className={style['stat-item']}>
+              <span className={style['stat-label']}>
+                Variants for neighbors
+              </span>
+              <span className={style['stat-value']}>
+                {stats.neighborOptions}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <Canvas canvasRef={canvasRef} params={params} setParams={setParams} />
+      <Canvas
+        canvasRef={canvasRef}
+        params={params}
+        setParams={setParams}
+        entropyMode={entropyMode}
+        onEntropyModeChange={handleEntropyModeChange}
+      />
     </div>
   );
 };
